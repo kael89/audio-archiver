@@ -1,4 +1,4 @@
-### Audio Archiver
+# Audio Archiver
 Audio Archiver is a PHP script which deals with the archiving of your music library. Our music record collections are often comprised by folders originating from various sources. This results in file name, audio metadata and format/bitrate inconsistencies. This program takes over the chore of manually standardizing your audio files and folders by automating this process.
 
 ## Program Specifications
@@ -6,8 +6,8 @@ Audio Archiver performs the following tasks:
 1. Backs up the target folder (optional)
 2. Scans the target folder for subfolders (`records`) that contain audio files (`tracks`)
 3. Renames the track file names and record folders according to a specified format. Examples using the default format [settings](#settings):
-* `Us Or THeM - 2005` will be formatted to `(2005) Us or Them`
-* `03-waltz for the fallen.mp3` will be formatted to `03 Waltz for the Fallen.mp3`
+* `Us Or THeM - 2005` record will be formatted to `(2005) Us or Them`
+* `03-waltz for the fallen.mp3` track will be formatted to `03 Waltz for the Fallen.mp3`
 4. Fills empty track metadata with the information available and also formats them according to a specified conversion
 5. Converts tracks to .mp3 format (optional). The bitrate is specified through the program's settings
 6. Creates an `archiver_log_${currentData}.txt` log file with information about the program's execution.
