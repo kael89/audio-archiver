@@ -1,4 +1,4 @@
-### Audio Archiver
+# Audio Archiver
 Audio Archiver is a PHP script which deals with the archiving of your music library. Our music record collections are often comprised by folders originating from various sources. This results in file name, audio metadata and format/bitrate inconsistencies. This program takes over the chore of manually standardizing your audio files and folders by automating this process.
 
 ## Program Specifications
