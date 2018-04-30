@@ -87,7 +87,6 @@ class FileHandler
         // Is folder
         $contents = dirContents($source);
         foreach ($contents as $content) {
-            // Get realpath of content
             if ($ignore && strpos($content, $ignore) === 0) {
                 continue;
             }
@@ -164,7 +163,7 @@ class FileHandler
     {
         if ($this->debug) {
             $this->debugLog("Creating directory $dir");
-        } elseif (@!mkdir(joinPath($dir . $folder))) {
+        } elseif (@!mkdir(joinPath($dir, $folder))) {
             $this->throwException("Unable to create folder $folder under $dir");
         }
     }

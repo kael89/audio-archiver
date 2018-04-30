@@ -85,7 +85,7 @@ class Program
         // Copy contents into backup folder
         try {
             $this->makeDir($this->dir, $backupFolder);
-            $this->copy($this->dir, $backupFolder, $backupDir);
+            $this->copy($this->dir, joinPath($this->dir, $backupFolder), $backupFolder);
         } catch (Exception $e) {
             throw $e;
         }
@@ -163,13 +163,13 @@ class Program
 
             foreach ($record->getTracks() as $track) {
                 $this->print(" " . leftPad($i, $padLength) . "/$count...");
-                
+
                 $path = $track->getPath();
                 $newPath = "$dir/" . createFilename($dir, $track->getFilename());
 
                 $args = [
                     // program name
-                    'ffmpeg' ,
+                    'ffmpeg',
                     // disable program logging
                     '-loglevel',
                     'quiet',
@@ -178,7 +178,7 @@ class Program
                     $path,
                     // destination bitrate
                     '-b:a',
-                     $this->getSetting('bitrate') . 'k',
+                    $this->getSetting('bitrate') . 'k',
                     // destination filepath
                     $newPath,
                 ];
@@ -277,10 +277,10 @@ class Program
         }
     }
 
-    private function copy($source, $dest)
+    private function copy($source, $dest, $ignore)
     {
         try {
-            $this->fileHandler->copy($source, $dest);
+            $this->fileHandler->copy($source, $dest, $ignore);
         } catch (Exception $e) {
             throw $e;
         }

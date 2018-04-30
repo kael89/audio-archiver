@@ -61,7 +61,10 @@ function createFilename($dir, $filename, $limit = 100)
             return '';
         }
 
-        $filename = "$name ($i).$ext";
+        $filename = "$name ($i)";
+        if ($ext) {
+            $filename .= ".$ext";
+        }
         $filepath = joinPath($dir, $filename);
         $i++;
     }

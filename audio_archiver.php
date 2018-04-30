@@ -44,7 +44,7 @@ function parseArgs($argv)
 
     $args['dir'] = realpath($argv[$off + 1]);
     if (!is_dir($args['dir'])) {
-        throw new Exception('Please specify an existing directory', E_ERROR);
+        throw new Exception("'$args[dir]' is not a valid directory", E_ERROR);
     }
 
     return $args;
