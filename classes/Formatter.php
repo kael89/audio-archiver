@@ -192,7 +192,7 @@ class Formatter
     private function formatRecord($record, $replaces)
     {
         try {
-            $newName = $this->format('record.title', $replaces);
+            $newName = sanitizeFilename($this->format('record.title', $replaces));
             $this->rename($record->getPath(), joinPath($record->getParentDir(), $newName));
             $record->rename($newName);
         } catch (Exception $e) {
@@ -203,7 +203,7 @@ class Formatter
     private function formatTrack($track, $replaces)
     {
         try {
-            $newName = $this->format('track.title', $replaces) . $track->getExtension();
+            $newName = sanitizeFilename($this->format('track.title', $replaces) . $track->getExtension());
             $this->rename($track->getPath(), joinPath($track->getDir(), $newName));
             $track->setName(getFileName($newName));
             $this->formatTrackMetadata($track);

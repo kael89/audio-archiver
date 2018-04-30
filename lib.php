@@ -26,6 +26,17 @@ function getFileName($filepath)
 }
 
 /**
+ * Replaces illegal filename characters with legal close matches
+ *
+ * @param string $filename
+ * @return string
+ */
+function sanitizeFilename($filename)
+{
+    return preg_replace("/\//", '-', $filename);
+}
+
+/**
  * Returns the extension of the provided filepath
  *
  * @param string $filepath The provided filepath
