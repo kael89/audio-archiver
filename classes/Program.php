@@ -10,6 +10,7 @@ class Program
     private $printer;
     private $logger;
     private $fileHandler;
+    private $backupFolder;
 
     const DEFAULT_OPTIONS = [
         'backup' => false,
@@ -86,6 +87,7 @@ class Program
         try {
             $this->makeDir($this->dir, $backupFolder);
             $this->copy($this->dir, joinPath($this->dir, $backupFolder), $backupFolder);
+            $this->backupFolder = $backupFolder;
         } catch (Exception $e) {
             throw $e;
         }
@@ -99,6 +101,10 @@ class Program
         $folders = scanFolders($this->dir);
         $folders[] = $this->dir;
         foreach ($folders as $folder) {
+            if (strpos($folder, $this->getOption('backup_dir')) !== false) {
+                continue;
+            }
+
             $files = dirFiles($folder);
             foreach ($files as $file) {
                 if (isAudio("$folder/$file")) {
