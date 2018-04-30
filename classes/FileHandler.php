@@ -5,6 +5,7 @@ class FileHandler
     private $debug;
     private $debugMethod;
     private $exceptionThrower;
+    private $copyIgnores;
 
     public function __construct($debug = false, $debugMethod = '', $exceptionHandler = '')
     {
@@ -53,6 +54,17 @@ class FileHandler
         $thrower($error);
     }
 
+    private function isIgnored($filepath)
+    {
+        foreach ($this->copyIgnores as $ignore) {
+            if (strpos($filepath, $ignore) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Copies the contents of source into dest
      *
@@ -62,10 +74,13 @@ class FileHandler
      * @return void
      * @throws Exception
      */
-    public function copy($source, $dest, $ignore = '')
+    public function copy($source, $dest, array $ignores = [])
     {
         $source = realpath($source);
         $dest = realpath($dest);
+        if ($this->copyIgnores === null) {
+            $this->copyIgnores = $ignores;
+        }
 
         foreach ([$source, $dest] as $item) {
             if (!file_exists($item)) {
@@ -75,6 +90,10 @@ class FileHandler
 
         // Is file?
         if (is_file($source)) {
+            if ($this->isIgnored($source, $this->copyIgnores)) {
+                return;
+            }
+
             if ($this->debug) {
                 $this->debugLog("Copying $source to $dest");
             } elseif (@!copy($source, $dest)) {
@@ -87,9 +106,10 @@ class FileHandler
         // Is folder
         $contents = dirContents($source);
         foreach ($contents as $content) {
-            if ($ignore && strpos($content, $ignore) === 0) {
+            if ($this->isIgnored($content, $this->copyIgnores)) {
                 continue;
             }
+
             $sourceContent = "$source/$content";
             $destContent = "$dest/$content";
 
@@ -113,6 +133,8 @@ class FileHandler
 
             $this->copy($sourceContent, $destContent);
         }
+
+
     }
 
     /**

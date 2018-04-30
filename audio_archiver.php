@@ -42,9 +42,10 @@ function parseArgs($argv)
         throw new Exception('Usage: php [-b] [-c] [-s] audio_archiver.php target', E_ERROR);
     }
 
-    $args['dir'] = realpath($argv[$off + 1]);
+    $dir = $argv[$off + 1];
+    $args['dir'] = realpath($dir);
     if (!is_dir($args['dir'])) {
-        throw new Exception("'$args[dir]' is not a valid directory", E_ERROR);
+        throw new Exception("'$dir' is not a valid directory", E_ERROR);
     }
 
     return $args;

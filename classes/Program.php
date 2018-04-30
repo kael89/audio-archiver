@@ -10,7 +10,6 @@ class Program
     private $printer;
     private $logger;
     private $fileHandler;
-    private $backupFolder;
 
     const DEFAULT_OPTIONS = [
         'backup' => false,
@@ -86,8 +85,8 @@ class Program
         // Copy contents into backup folder
         try {
             $this->makeDir($this->dir, $backupFolder);
-            $this->copy($this->dir, joinPath($this->dir, $backupFolder), $backupFolder);
-            $this->backupFolder = $backupFolder;
+            $ignores = [$backupDir, $this->getOption('log_filename')];
+            $this->copy($this->dir, joinPath($this->dir, $backupFolder), $ignores);
         } catch (Exception $e) {
             throw $e;
         }
@@ -283,10 +282,10 @@ class Program
         }
     }
 
-    private function copy($source, $dest, $ignore)
+    private function copy($source, $dest, $ignores)
     {
         try {
-            $this->fileHandler->copy($source, $dest, $ignore);
+            $this->fileHandler->copy($source, $dest, $ignores);
         } catch (Exception $e) {
             throw $e;
         }
